@@ -65,5 +65,7 @@ gitCfgBck() {
 gitlBck
 gitCfgBck
 
+chown -R $USER:$USER $DATE
+
 # Rsync vers le serveur de backup
 rsync -rRtavz $DATE -e "ssh -p$rsPort -i /home/$rsUsr/.ssh/id_rsa" $rsUsr@$rsIP:$rsPath
