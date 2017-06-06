@@ -70,3 +70,5 @@ sudo chown -R $USER:$USER $DATE
 # scp vers le serveur de backup
 ssh -t $spUsr@$spIP -p$spPort -i "/home/$USER/.ssh/id_rsa" "sudo mkdir -p $spPath/$DATE && sudo chown -R $spUsr:$spUsr $spPath"
 sudo scp -r "-P$spPort" -i /home/$USER/.ssh/id_rsa $DATE $spUsr@$spIP:$spPath
+
+rm -rf $DATE
