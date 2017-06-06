@@ -24,10 +24,10 @@
 USER=""
 DATE=`date +%d-%m-%Y`
 FMTDATE=`date +%Y_%m_%d`
-rsPort='' # SSH PORT REMOTE
-rsUsr=''  # USER REMOTE
-rsPath='' # PATH REMOTE
-rsIp=''   # IP REMOTE
+spPort='' # SSH PORT REMOTE
+spUsr=''  # USER REMOTE
+spPath='' # PATH REMOTE
+spIP=''
 
 # Preventing root running
 if [[ $EUID -eq 0 ]]; then
@@ -45,7 +45,7 @@ gitlBck() {
     cd /home/$USER/
     sudo gitlab-rake gitlab:backup:create
     bckFile=`sudo ls /var/opt/gitlab/backups/ | grep $FMTDATE`
-    mv /var/opt/gitlab/backups/$bckFile /home/$USER/$DATE/    
+    sudo mv /var/opt/gitlab/backups/$bckFile /home/$USER/$DATE/    
 
 }
 
@@ -65,7 +65,8 @@ gitCfgBck() {
 gitlBck
 gitCfgBck
 
-chown -R $USER:$USER $DATE
+sudo chown -R $USER:$USER $DATE
 
-# Rsync vers le serveur de backup
-rsync -rRtavz $DATE -e "ssh -p$rsPort -i /home/$rsUsr/.ssh/id_rsa" $rsUsr@$rsIP:$rsPath
+# scp vers le serveur de backup
+ssh -t $spUsr@$spIP -p$spPort -i "/home/$USER/.ssh/id_rsa" "sudo mkdir -p $spPath/$DATE && sudo chown -R $spUsr:$spUsr $spPath"
+sudo scp -r "-P$spPort" -i /home/$USER/.ssh/id_rsa $DATE $spUsr@$spIP:$spPath
