@@ -27,6 +27,7 @@ FMTDATE=`date +%Y_%m_%d`
 rsPort='' # SSH PORT REMOTE
 rsUsr=''  # USER REMOTE
 rsPath='' # PATH REMOTE
+rsIp=''   # IP REMOTE
 
 # Preventing root running
 if [[ $EUID -eq 0 ]]; then
