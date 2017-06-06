@@ -43,8 +43,8 @@ gitlBck() {
     # /var/opt/gitlab/backups/
     cd /home/$USER/
     sudo gitlab-rake gitlab:backup:create
-    bckFile=`ls /var/opt/gitlab/backups/ | grep $FMTDATE`
-    mv $bckFile /home/$USER/$DATE/    
+    bckFile=`sudo ls /var/opt/gitlab/backups/ | grep $FMTDATE`
+    mv /var/opt/gitlab/backups/$bckFile /home/$USER/$DATE/    
 
 }
 
