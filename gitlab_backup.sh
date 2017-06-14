@@ -45,7 +45,19 @@ gitlBck() {
     cd /home/$USER/
     sudo gitlab-rake gitlab:backup:create
     bckFile=`sudo ls /var/opt/gitlab/backups/ | grep $FMTDATE`
-    sudo mv /var/opt/gitlab/backups/$bckFile /home/$USER/$DATE/    
+    sudo mv /var/opt/gitlab/backups/$bckFile /home/$USER/$DATE/
+    
+    # Restore
+    # sudo cp 1393513186_gitlab_backup.tar /var/opt/gitlab/backups/
+    # Stop processes that are connected to the database
+    # sudo gitlab-ctl stop unicorn
+    # sudo gitlab-ctl stop sidekiq
+    #
+    # This command will overwrite the contents of your GitLab database!
+    # sudo gitlab-rake gitlab:backup:restore BACKUP=1393513186
+    #
+    # Start GitLab
+    # sudo gitlab-ctl start
 
 }
 
